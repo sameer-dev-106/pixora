@@ -1,14 +1,13 @@
 const postModel = require("../models/post.model");
 const ImageKit = require("@imagekit/nodejs");
 const { toFile } = require("@imagekit/nodejs");
-const jwt = require("jsonwebtoken");
+const likeModel = require("../models/like.model");
 
 const imageKit = new ImageKit({
     privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
 });
 
 async function createPostController(req, res) {
-
     if (!req.file) {
         return res.status(400).json({
             message: "Image file is required"
@@ -31,11 +30,9 @@ async function createPostController(req, res) {
         message: "Post created successfully.",
         post
     });
-
 }
 
 async function getPostController(req, res) {
-
     const userId = req.user.id
 
     const posts = await postModel.find({
@@ -49,7 +46,6 @@ async function getPostController(req, res) {
 }
 
 async function getPostDetailsController(req, res) {
-
     const userId = req.user.id;
     const postId = req.params.postId;
 
@@ -57,26 +53,62 @@ async function getPostDetailsController(req, res) {
 
     if (!post) {
         return res.status(404).json({
-            message:"Post not found"
+            message: "Post not found"
         });
     }
 
     const isValidUser = post.user.toString() === userId;
 
-    if (!isValidUser){
+    if (!isValidUser) {
         return res.status(403).json({
-            message:"Forbidden Content."
+            message: "Forbidden Content."
         });
     }
 
     res.status(200).json({
-        message:"Post Fetched successfully.",
+        message: "Post Fetched successfully.",
         post
     });
+}
+
+async function likePostController(req, res) {
+    const username = req.user.username;
+    const postId = req.params.postId;
+
+    const post = await postModel.findById(postId);
+
+    if (!post) {
+        return req.status(404).json({
+            message: "Post not found."
+        });
+    }
+
+    const isPostAlreadyLiked = await likeModel.findOne({
+        post: postId,
+        user: username
+    });
+
+    if (isPostAlreadyLiked) {
+        return res.status(200).json({
+            message: `You are already Like this post ${postId}`,
+            liked: isPostAlreadyLiked
+        });
+    }
+
+    const like = await likeModel.create({
+        post: postId,
+        user: username
+    });
+
+    res.status(200).json({
+        message: "Post liked successfully.",
+        like
+    })
 }
 
 module.exports = {
     createPostController,
     getPostController,
-    getPostDetailsController
+    getPostDetailsController,
+    likePostController
 }
