@@ -11,6 +11,13 @@ main{
     font-size: 1rem;
 }
 
+.home-page{
+    color: #fff;
+    text-align: center;
+    // font-size: 1.5rem;
+    line-height: 1.5;
+}
+
 .form-container {
 
     @include flex-center;
