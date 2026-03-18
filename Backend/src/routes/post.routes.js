@@ -24,9 +24,21 @@ postRouter.get("/", identifyUser, postController.getPostController);
 postRouter.get("/details/:postId", identifyUser, postController.getPostDetailsController);
 
 /**
+ * @route DELETE /api/posts/:postid
+ * @description delete the post with the id provided in the request params. also check whether the post belongs to the user that the request come from
+ */
+postRouter.delete("/:postId", identifyUser, postController.deletePostController);
+
+/**
  * @route POST /api/posts/like/:postid
  * @description like a post with the id provided in the request params. 
  */
 postRouter.post("/like/:postId", identifyUser, postController.likePostController);
+
+/**
+ * @route POST /api/posts/feed
+ * @description Get the feed of posts for the authenticated user. The feed should include posts from users that the authenticated user is following, sorted by creation date (newest first).
+ */
+postRouter.get("/feed", identifyUser, postController.getFeedController);
 
 module.exports = postRouter;
