@@ -1,4 +1,4 @@
-<p align="center">
+<p>
   <img src="./Frontend/public/PixoraLogo.png" width="120" />
 </p>
 
