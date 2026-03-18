@@ -72,7 +72,7 @@ async function getPostDetailsController(req, res) {
 }
 
 async function likePostController(req, res) {
-    const username = req.user.username;
+    const userid = req.user.id;
     const postId = req.params.postId;
 
     const post = await postModel.findById(postId);
@@ -85,7 +85,7 @@ async function likePostController(req, res) {
 
     const isPostAlreadyLiked = await likeModel.findOne({
         post: postId,
-        user: username
+        user: userid
     });
 
     if (isPostAlreadyLiked) {
@@ -97,7 +97,7 @@ async function likePostController(req, res) {
 
     const like = await likeModel.create({
         post: postId,
-        user: username
+        user: userid
     });
 
     res.status(200).json({

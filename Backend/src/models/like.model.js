@@ -7,8 +7,9 @@ const likeSchema = new mongoose.Schema({
         required: [true, "post id is required for creating a like"]
     },
     user: {
-        type: String,
-        required: [true, "username is required for creating a like"]
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users",
+        required: [true, "user id is required for creating a like"]
     }
 }, {
     timestamps: true

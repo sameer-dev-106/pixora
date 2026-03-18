@@ -2,11 +2,11 @@ const followModel = require("../models/follow.model");
 const userModel = require("../models/user.model");
 
 async function followUserController(req, res) {
-    const followerUsername = req.user.username;
-    const followeeUsername = req.params.username
+    const followerUserid = req.user.id;
+    const followeeUserid = req.params.userId;
 
     // user cannot follo himself
-    if (followerUsername === followeeUsername) {
+    if (followerUserid === followeeUserid) {
         return res.status(400).json({
             message: "You cannot follow yourself"
         });
@@ -14,7 +14,7 @@ async function followUserController(req, res) {
 
     // check user exists
     const isFolloweeExists = await userModel.findOne({
-        username: followeeUsername
+        _id: followeeUserid
     });
 
     if (!isFolloweeExists) {
@@ -25,8 +25,8 @@ async function followUserController(req, res) {
 
     // check existing follow record
     const existingFollow = await followModel.findOne({
-        follower: followerUsername,
-        followee: followeeUsername
+        follower: followerUserid,
+        followee: followeeUserid
     });
 
     if (existingFollow) {
@@ -34,14 +34,14 @@ async function followUserController(req, res) {
         // already accepted
         if (existingFollow.status === "accepted") {
             return res.status(200).json({
-                message: `You are already following ${followeeUsername}`
+                message: `You are already following ${followeeUserid}`
             });
         }
 
         // already pending
         if (existingFollow.status === "pending") {
             return res.status(200).json({
-                message: `Follow request already sent to ${followeeUsername}`
+                message: `Follow request already sent to ${followeeUserid}`
             });
         }
 
@@ -59,23 +59,23 @@ async function followUserController(req, res) {
 
     // create follow request
     const followRecord = await followModel.create({
-        follower: followerUsername,
-        followee: followeeUsername,
+        follower: followerUserid,
+        followee: followeeUserid,
         status: "pending"
     });
 
     res.status(201).json({
-        message: `Follow request sent to ${followeeUsername}`,
+        message: `Follow request sent to ${followeeUserid}`,
         followRecord
     });
 }
 
 async function getFollowRequestsController(req, res) {
 
-    const username = req.user.username;
+    const userid = req.user.id;
 
     const requests = await followModel.find({
-        followee: username,
+        followee: userid,
         status: "pending"
     });
 
@@ -88,8 +88,8 @@ async function getFollowRequestsController(req, res) {
 
 async function acceptFollowRequestController(req, res) {
 
-    const followee = req.user.username;
-    const follower = req.params.username;
+    const followee = req.user.id;
+    const follower = req.params.userId;
 
     const request = await followModel.findOneAndUpdate(
         {
@@ -118,8 +118,8 @@ async function acceptFollowRequestController(req, res) {
 
 async function rejectFollowRequestController(req, res) {
 
-    const followee = req.user.username;
-    const follower = req.params.username;
+    const followee = req.user.id;
+    const follower = req.params.userId;
 
     const request = await followModel.findOneAndUpdate(
         {
@@ -138,33 +138,33 @@ async function rejectFollowRequestController(req, res) {
 }
 
 async function unfollowUserController(req, res) {
-    const followerUsername = req.user.username
-    const followeeUsername = req.params.username
+    const followerUserid = req.user.id;
+    const followeeUserid = req.params.userId;
 
     const isUserFollowing = await followModel.findOne({
-        follower: followerUsername,
-        followee: followeeUsername
+        follower: followerUserid,
+        followee: followeeUserid
     });
 
     if (!isUserFollowing) {
         return res.status(200).json({
-            message: `You are not following ${followeeUsername}`
+            message: `You are not following ${followeeUserid}`
         });
     }
 
     await followModel.findByIdAndDelete(isUserFollowing._id);
 
     res.status(200).json({
-        message: `You have unfollowed ${followeeUsername}`
+        message: `You have unfollowed ${followeeUserid}`
     });
 }
 
 async function getFollowersController(req, res) {
 
-    const username = req.user.username;
+    const userid = req.user.id;
 
     const follower = await followModel.find({
-        followee: username,
+        followee: userid,
         status:"accepted"
     });
 
@@ -175,10 +175,10 @@ async function getFollowersController(req, res) {
 
 async function getFollowingController(req, res) {
 
-    const username = req.user.username;
+    const userid = req.user.id;
 
     const follower = await followModel.find({
-        follower: username,
+        follower: userid,
         status: "accepted"
     });
 

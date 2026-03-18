@@ -6,11 +6,11 @@ const userRouter = express.Router();
 
 
 /**
- * @route POST /api/users/follow/:username
+ * @route POST /api/users/follow/:userId
  * @description Send follow request to a user (private account workflow)
  * @access Private
  */
-userRouter.post("/follow/:username", identifyUser, userController.followUserController);
+userRouter.post("/follow/:userId", identifyUser, userController.followUserController);
 
 /**
  * @route GET /api/users/follow-requests
@@ -20,25 +20,25 @@ userRouter.post("/follow/:username", identifyUser, userController.followUserCont
 userRouter.get("/follow-requests", identifyUser, userController.getFollowRequestsController);
 
 /**
- * @route POST /api/users/follow/accept/:username
+ * @route POST /api/users/follow/accept/:userId
  * @description Accept a follow request sent by a user
  * @access Private
  */
-userRouter.post("/follow/accept/:username", identifyUser, userController.acceptFollowRequestController);
+userRouter.post("/follow/accept/:userId", identifyUser, userController.acceptFollowRequestController);
 
 /**
- * @route POST /api/users/follow/reject/:username
+ * @route POST /api/users/follow/reject/:userId
  * @description Reject a follow request sent by a user
  * @access Private
  */
-userRouter.post("/follow/reject/:username", identifyUser, userController.rejectFollowRequestController);
+userRouter.post("/follow/reject/:userId", identifyUser, userController.rejectFollowRequestController);
 
 /**
- * @route POST /api/users/unfollow/:username
+ * @route POST /api/users/unfollow/:userId
  * @description Unfollow a user
  * @access Private
  */
-userRouter.post("/unfollow/:username", identifyUser, userController.unfollowUserController);
+userRouter.post("/unfollow/:userId", identifyUser, userController.unfollowUserController);
 
 /**
  * @route GET /api/users/followers
