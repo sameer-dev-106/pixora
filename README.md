@@ -1,12 +1,31 @@
-# Instagram Clone MERN
+<p align="center">
+  <img src="./Frontend/public/PixoraLogo.png" width="120" />
+</p>
 
-A fullstack Instagram clone built using Node.js, Express, MongoDB and React.
+<h1 align="center">Pixora</h1>
+
+<p align="center">
+  Build • Share • Connect
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/MERN-Stack-green" />
+  <img src="https://img.shields.io/badge/Status-Active-blue" />
+  <img src="https://img.shields.io/badge/Frontend-React-orange" />
+  <img src="https://img.shields.io/badge/Backend-Node.js-yellow" />
+</p>
 
 ---
 
-# Project Structure
+Pixora is a modern fullstack social media platform built using the MERN stack.
 
-## Backend
+It focuses on clean UI, scalable backend architecture and real-world features like authentication, follow system, posts and user interactions.
+
+---
+
+# 📂 Project Structure
+
+## 🔧 Backend
 
 - Express server setup
 - MVC architecture (Routes + Controllers + Models)
@@ -15,7 +34,7 @@ A fullstack Instagram clone built using Node.js, Express, MongoDB and React.
 - Multer for image handling
 - ImageKit cloud storage integration
 
-## Frontend
+## 🎨 Frontend
 
 - React + Vite setup
 - Feature based architecture
@@ -23,10 +42,11 @@ A fullstack Instagram clone built using Node.js, Express, MongoDB and React.
 - SCSS architecture with variables and mixins
 - Reusable form styles
 - React Router based page navigation
+- Auth context and custom hooks
 
 ---
 
-# Tech Stack
+# 🛠️ Tech Stack
 
 ## Backend
 
@@ -48,9 +68,9 @@ A fullstack Instagram clone built using Node.js, Express, MongoDB and React.
 
 ---
 
-# Features Implemented
+# ✨ Features Implemented
 
-## Authentication
+## 🔐 Authentication
 
 - User registration
 - User login
@@ -61,7 +81,7 @@ A fullstack Instagram clone built using Node.js, Express, MongoDB and React.
 
 ---
 
-## User System
+## 👤 User System
 
 - Unique username and email validation
 - Default profile image support
@@ -72,7 +92,7 @@ A fullstack Instagram clone built using Node.js, Express, MongoDB and React.
 
 ---
 
-## Post System
+## 📸 Post System
 
 - Create post
 - Upload images using multer memoryStorage
@@ -82,7 +102,7 @@ A fullstack Instagram clone built using Node.js, Express, MongoDB and React.
 
 ---
 
-## Social Features
+## 🤝 Social Features
 
 - Follow / Unfollow user
 - Follow request system
@@ -94,7 +114,7 @@ A fullstack Instagram clone built using Node.js, Express, MongoDB and React.
 
 ---
 
-# Database Design Concepts
+# 🧠 Database Design Concepts
 
 - Edge collection pattern for follow relationships
 - Compound indexes to prevent duplicate actions
@@ -102,10 +122,18 @@ A fullstack Instagram clone built using Node.js, Express, MongoDB and React.
 
 ---
 
-# Status
+# 🚧 Status
 
 Backend authentication, follow system, post system and like functionality completed.
 
-Frontend authentication UI setup completed.
+Frontend authentication system with UI and structure implemented.
 
 Project under active development.
+
+---
+
+# 💡 Vision
+
+Pixora aims to become a scalable and production-ready social media platform with modern UI, optimized backend performance and real-world architecture.
+
+---
