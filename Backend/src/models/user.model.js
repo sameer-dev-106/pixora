@@ -20,6 +20,8 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "https://ik.imagekit.io/ifef0t8sn/Pixora/User-profile/Default-profile-image?updatedAt=1773769068316"
     }
+}, {
+    timestamps: true
 });
 
 const userModel = mongoose.model("users", userSchema);
