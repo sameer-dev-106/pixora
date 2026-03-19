@@ -131,7 +131,7 @@ async function getFeedController(req, res) {
         res.status(200).json({
             message: "Feed fetched successfully.",
             currentPage: page,
-            totalPosts: Math.ceil(totalPosts / limit),
+            totalPages: Math.ceil(totalPosts / limit),
             totalPosts,
             posts
         });
@@ -151,7 +151,7 @@ async function likePostController(req, res) {
     const post = await postModel.findById(postId);
 
     if (!post) {
-        return req.status(404).json({
+        return res.status(404).json({
             message: "Post not found."
         });
     }
