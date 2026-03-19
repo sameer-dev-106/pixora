@@ -138,20 +138,35 @@ async function getFeedController(req, res) {
     try {
         const userId = req.user.id;
 
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const skip = (page - 1) * limit;
+
         const following = await followModel.find({
             follower: userId,
             status: "accepted"
         }).select("followee");
 
-        const followingIds = following.map(follow => follow.followee);
+        const followingIds = following.map(f=> f.followee);
         followingIds.push(userId);
 
         const posts = await postModel.find({
             user: { $in: followingIds }
-        }).populate("user", "username profileImage").sort({ createdAt: -1 });
+        })
+        .populate("user", "username profileImage")
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit);
+
+        const totalPosts = await postModel.countDocuments({
+            user: { $in: followingIds }
+        });
 
         res.status(200).json({
             message: "Feed fetched successfully.",
+            currentPage: page,
+            totalPosts: Math.ceil(totalPosts / limit),
+            totalPosts,
             posts
         });
 
