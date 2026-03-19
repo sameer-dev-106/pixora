@@ -1,5 +1,6 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
+const errorHandler = require("./middlewares/error.middleware");
 const cors = require("cors");
 
 const app = express();
@@ -21,5 +22,8 @@ const userRouter = require("./routes/user.routes");
 app.use("/api/auth", authRouter);
 app.use("/api/posts", postRouter);
 app.use("/api/users", userRouter);
+
+// Error handling middleware
+app.use(errorHandler);
 
 module.exports = app;
