@@ -2,6 +2,14 @@ const userModel = require("../models/user.model");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+const ImageKit = require("@imagekit/nodejs");
+const { toFile } = require("@imagekit/nodejs");
+
+const imageKit = new ImageKit({
+    privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
+});
+
+
 async function registerController(req, res) {
     const { username, email, password, bio, profileImage } = req.body;
 
@@ -56,6 +64,41 @@ async function registerController(req, res) {
     });
 }
 
+async function updateProfileController(req, res) {
+    const userId = req.user.id;
+
+    const { username, email, bio } = req.body;
+
+    const user = await userModel.findById(userId);
+
+    if (!user) {
+        return res.status(404).json({
+            message: "User not found"
+        });
+    }
+
+    if (username) user.username = username;
+    if (email) user.email = email;
+    if (bio) user.bio = bio;
+
+    if (req.file) {
+        const file = await imageKit.files.upload({
+            file: await toFile(Buffer.from(req.file.buffer), "file"),
+            fileName: "profile",
+            folder: "Pixora/User-profile"
+        });
+
+        user.profileImage = file.url;
+    }
+
+    await user.save();
+
+    res.status(200).json({
+        message: "Profile updated successfully",
+        user
+    });
+}
+
 async function loginController(req, res) {
     const { username, email, password } = req.body;
 
@@ -99,6 +142,13 @@ async function loginController(req, res) {
     });
 }
 
+async function logoutController(req, res) {
+    res.clearCookie("token");
+    res.status(200).json({
+        message: "User logged out successfully"
+    });
+}
+
 async function getMeController(req, res) {
     const userId = req.user.id
 
@@ -116,6 +166,8 @@ async function getMeController(req, res) {
 
 module.exports = {
     registerController,
+    updateProfileController,
     loginController,
+    logoutController,
     getMeController
 }
