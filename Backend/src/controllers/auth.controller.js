@@ -1,4 +1,6 @@
 const userModel = require("../models/user.model");
+const followModel = require("../models/follow.model");
+const postModel = require("../models/post.model")
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -107,11 +109,11 @@ async function loginController(req, res) {
             { username },
             { email }
         ]
-    });
+    }).select("+password");
 
     if (!user) {
         return res.status(404).json({
-            message: "User note found"
+            message: "User not found"
         });
     }
 
@@ -150,19 +152,53 @@ async function logoutController(req, res) {
 }
 
 async function getMeController(req, res) {
-    const userId = req.user.id
+    try {
+        const userId = req.user.id;
 
-    const user = await userModel.findById(userId);
+        const user = await userModel.findById(userId).lean();
 
-    res.status(200).json({
-        user: {
-            username: user.username,
-            email: user.email,
-            bio: user.bio,
-            profileImage: user.profileImage
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            });
         }
-    });
+
+        const posts = await postModel.find({ user: userId }).sort({ createdAt: -1 });
+
+        const postCount = posts.length;
+
+        const followerCount = await followModel.countDocuments({
+            followee: userId,
+            status: "accepted"
+        });
+
+        const followingCount = await followModel.countDocuments({
+            follower: userId,
+            status: "accepted"
+        });
+
+        res.status(200).json({
+            user: {
+                _id: user._id,
+                username: user.username,
+                email: user.email,
+                bio: user.bio,
+                profileImage: user.profileImage,
+            },
+            posts,
+            postCount,
+            followerCount,
+            followingCount,
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Error fetching profile",
+            error: error.message,
+        });
+    }
 }
+
 
 module.exports = {
     registerController,
