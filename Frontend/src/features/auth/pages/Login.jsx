@@ -22,15 +22,36 @@ const Login = () => {
   async function submitHandler(e) {
     e.preventDefault();
 
-    await handleLogin(username, password);
+    if (!username || !password) {
+      alert("All fields are required");
+      return;
+    }
 
-    navigate("/");
+    const user = await handleLogin(username, password);
+
+    if(!user) {
+      alert("Login Failed. Please check your credentials and try again.");
+      return;
+    }
+
+    if (!user.bio) {
+      navigate("/setup-profile");
+    } else {
+      navigate("/");
+    }
 
   }
 
   return (
     <main>
-      <div className="form-container">
+      <section className="form-header">
+        <div className="logo">
+          <img src="/PixoraLogo.png" alt="" />
+        </div>
+        <h2>Welcome Back!</h2>
+        <p>Login to your account to continue</p>
+      </section>
+      <section className="form-container">
         <h1>Login</h1>
         <form onSubmit={(e) => submitHandler(e)}>
           <input
@@ -57,7 +78,7 @@ const Login = () => {
             Register
           </Link>
         </p>
-      </div>
+      </section>
     </main>
   );
 };
