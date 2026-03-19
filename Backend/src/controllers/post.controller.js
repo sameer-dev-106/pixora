@@ -3,6 +3,7 @@ const ImageKit = require("@imagekit/nodejs");
 const { toFile } = require("@imagekit/nodejs");
 const likeModel = require("../models/like.model");
 const followModel = require("../models/follow.model");
+const commentModel = require("../models/comment.model");
 
 const imageKit = new ImageKit({
     privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
@@ -99,6 +100,50 @@ async function deletePostController(req, res) {
     });
 }
 
+async function getFeedController(req, res) {
+    try {
+        const userId = req.user.id;
+
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const skip = (page - 1) * limit;
+
+        const following = await followModel.find({
+            follower: userId,
+            status: "accepted"
+        }).select("followee");
+
+        const followingIds = following.map(f => f.followee);
+        followingIds.push(userId);
+
+        const posts = await postModel.find({
+            user: { $in: followingIds }
+        })
+            .populate("user", "username profileImage")
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit);
+
+        const totalPosts = await postModel.countDocuments({
+            user: { $in: followingIds }
+        });
+
+        res.status(200).json({
+            message: "Feed fetched successfully.",
+            currentPage: page,
+            totalPosts: Math.ceil(totalPosts / limit),
+            totalPosts,
+            posts
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: "An error occurred while fetching the feed.",
+            error: error.message
+        });
+    }
+}
+
 async function likePostController(req, res) {
     const userid = req.user.id;
     const postId = req.params.postId;
@@ -134,55 +179,95 @@ async function likePostController(req, res) {
     })
 }
 
-async function getFeedController(req, res) {
+async function unlikePostController(req, res) {
+    const userid = req.user.id;
+    const postId = req.params.postId;
+
+    const like = await likeModel.findOneAndDelete({
+        post: postId,
+        user: userid
+    });
+
+    if (!like) {
+        return res.status(404).json({
+            message: "Like not found."
+        });
+    }
+
+    res.status(200).json({
+        message: "Post unliked successfully.",
+        like
+    });
+}
+
+async function createCommentController(req, res) {
     try {
         const userId = req.user.id;
+        const postId = req.params.postId;
+        const { text } = req.body;
 
-        const page = parseInt(req.query.page) || 1;
-        const limit = parseInt(req.query.limit) || 10;
-        const skip = (page - 1) * limit;
+        if (!text) {
+            return res.status(400).json({
+                message: "Comment text is required."
+            });
+        }
 
-        const following = await followModel.find({
-            follower: userId,
-            status: "accepted"
-        }).select("followee");
+        const post = await postModel.findById(postId);
 
-        const followingIds = following.map(f=> f.followee);
-        followingIds.push(userId);
+        if (!post) {
+            return res.status(404).json({
+                message: "Post not found."
+            });
+        }
 
-        const posts = await postModel.find({
-            user: { $in: followingIds }
-        })
-        .populate("user", "username profileImage")
-        .sort({ createdAt: -1 })
-        .skip(skip)
-        .limit(limit);
-
-        const totalPosts = await postModel.countDocuments({
-            user: { $in: followingIds }
+        const comment = await commentModel.create({
+            post: postId,
+            user: userId,
+            text
         });
 
-        res.status(200).json({
-            message: "Feed fetched successfully.",
-            currentPage: page,
-            totalPosts: Math.ceil(totalPosts / limit),
-            totalPosts,
-            posts
+        res.status(201).json({
+            message: "Comment created successfully.",
+            comment
         });
 
     } catch (error) {
         res.status(500).json({
-            message: "An error occurred while fetching the feed.",
+            message: "An error occurred while creating the comment.",
             error: error.message
         });
     }
 }
 
+async function getCommentsController(req, res) {
+    try {
+        const postId = req.params.postId;
+
+        const comments = await commentModel.find({ post: postId })
+            .populate("user", "username profileImage")
+            .sort({ createdAt: -1 });
+
+        res.status(200).json({
+            message: "Comments fetched successfully.",
+            comments
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: "An error occurred while fetching comments.",
+            error: error.message
+        });
+    }
+
+}
 module.exports = {
     createPostController,
     getPostController,
     getPostDetailsController,
     deletePostController,
+    getFeedController,
     likePostController,
-    getFeedController
-}
+    unlikePostController,
+    createCommentController,
+    getCommentsController
+};

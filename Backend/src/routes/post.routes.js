@@ -30,15 +30,34 @@ postRouter.get("/details/:postId", identifyUser, postController.getPostDetailsCo
 postRouter.delete("/:postId", identifyUser, postController.deletePostController);
 
 /**
+ * @route POST /api/posts/feed
+ * @description Get the feed of posts for the authenticated user. The feed should include posts from users that the authenticated user is following, sorted by creation date (newest first).
+ */
+postRouter.get("/feed", identifyUser, postController.getFeedController);
+
+
+/**
  * @route POST /api/posts/like/:postid
  * @description like a post with the id provided in the request params. 
  */
 postRouter.post("/like/:postId", identifyUser, postController.likePostController);
 
 /**
- * @route POST /api/posts/feed
- * @description Get the feed of posts for the authenticated user. The feed should include posts from users that the authenticated user is following, sorted by creation date (newest first).
+ * @route POST /api/posts/unlike/:postid
+ * @description unlike a post with the id provided in the request params. 
  */
-postRouter.get("/feed", identifyUser, postController.getFeedController);
+postRouter.post("/unlike/:postId", identifyUser, postController.unlikePostController);
+
+/**
+ * @route POST /api/posts/comment/:postid
+ * @description comment on a post with the id provided in the request params. 
+ */
+postRouter.post("/comment/:postId", identifyUser, postController.createCommentController);
+
+/**
+ * @route GET /api/posts/comments/:postid
+ * @description get all comments on a post with the id provided in the request params.
+ */
+postRouter.get("/comments/:postId", identifyUser, postController.getCommentsController);
 
 module.exports = postRouter;
