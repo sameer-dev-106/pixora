@@ -10,12 +10,11 @@ const GetMe = () => {
 
   const { loading, handleGetMe } = useAuth();
 
-  const fetchUser = async () => {
-    const res = await handleGetMe();
-    setData(res);
-  };
-
   useEffect(() => {
+    const fetchUser = async () => {
+      const res = await handleGetMe();
+      setData(res);
+    };
     fetchUser();
   }, []);
 
@@ -24,7 +23,7 @@ const GetMe = () => {
       <main>
         <h1>Loading...</h1>
       </main>
-  );
+    );
   }
 
   return (
