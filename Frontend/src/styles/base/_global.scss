@@ -10,6 +10,10 @@ body,
     width: 100dvw;
 }
 
+body {
+    overflow-x: hidden;
+}
+
 html {
     background-color: #111;
     color: #f1f1f1;
