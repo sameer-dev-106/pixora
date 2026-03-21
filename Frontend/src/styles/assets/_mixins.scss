@@ -37,9 +37,9 @@
     background: $bg;
 }
 
-@mixin primary-btn {
+@mixin primary-btn ($space: 1rem) {
     border: none;
-    padding: 1rem;
+    padding: $space;
     border-radius: $radius-sm;
     background: $btn-bg;
     color: $btn-text;
