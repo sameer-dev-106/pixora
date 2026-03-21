@@ -1,14 +1,10 @@
+# Pixora
+
 <p>
-  <img src="./Frontend/public/PixoraLogo.png" width="120" />
-</p>
-
-<h1 align="center">Pixora</h1>
-
-<p align="center">
   Build • Share • Connect
 </p>
 
-<p align="center">
+<p>
   <img src="https://img.shields.io/badge/MERN-Stack-green" />
   <img src="https://img.shields.io/badge/Status-Active-blue" />
   <img src="https://img.shields.io/badge/Frontend-React-orange" />
