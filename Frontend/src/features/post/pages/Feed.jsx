@@ -30,7 +30,7 @@ const Feed = () => {
 
   return (
     <main className="feed-page">
-      {/* <Nav /> */}
+      <Nav />
       <div className="feed">
         <div className="posts">
           {feed?.map((post, idx) => {
@@ -39,7 +39,7 @@ const Feed = () => {
           {loading && <p align="center">Loading more...</p>}
         </div>
       </div>
-      {/* <BottomNav /> */}
+      <BottomNav />
     </main>
   );
 };
