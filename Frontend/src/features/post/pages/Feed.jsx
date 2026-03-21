@@ -10,7 +10,7 @@ const Feed = () => {
 
   useEffect(() => {
     handleGetFeed(1);
-  }, []);
+  }, [handleGetFeed]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,7 +26,7 @@ const Feed = () => {
     window.addEventListener("scroll", handleScroll);
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [handleGetFeed, page, totalPages, loading]);
 
   return (
     <main className="feed-page">

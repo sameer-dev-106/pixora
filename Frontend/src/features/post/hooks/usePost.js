@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useCallback, useContext } from "react";
 import { getFeed, likePost, unlikePost } from "../services/post.api.js";
 import PostContext from "../Post.context.jsx";
 
@@ -9,7 +9,7 @@ export const usePost = () => {
 
     const { loading, setLoading, post, setPost, feed, setFeed, error, setError, page, setPage, totalPages, setTotalPages } = context
 
-    const handleGetFeed = async (newPage = 1) => {
+    const handleGetFeed = useCallback(async (newPage = 1) => {
         setLoading(true);
         try {
             const response = await getFeed(newPage);
@@ -31,7 +31,7 @@ export const usePost = () => {
         } finally {
             setLoading(false)
         }
-    }
+    }, [setLoading, setFeed, setPage, setTotalPages, setError])
 
     const handleLike = async (postId, isLiked) => {
         try {
