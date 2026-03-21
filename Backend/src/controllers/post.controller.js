@@ -99,11 +99,9 @@ async function deletePostController(req, res) {
         message: "Post deleted successfully."
     });
 }
-
 async function getFeedController(req, res) {
     try {
         const userId = req.user.id;
-
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 10;
         const skip = (page - 1) * limit;
@@ -122,7 +120,28 @@ async function getFeedController(req, res) {
             .populate("user", "username profileImage")
             .sort({ createdAt: -1 })
             .skip(skip)
-            .limit(limit);
+            .limit(limit)
+            .lean();
+
+        const updatedPosts = await Promise.all(
+            posts.map(async (post) => {
+
+                const isLiked = await likeModel.findOne({
+                    user: userId,
+                    post: post._id
+                });
+
+                const likesCount = await likeModel.countDocuments({
+                    post: post._id
+                });
+
+                return {
+                    ...post,
+                    isLiked: Boolean(isLiked),
+                    likesCount
+                };
+            })
+        );
 
         const totalPosts = await postModel.countDocuments({
             user: { $in: followingIds }
@@ -133,7 +152,7 @@ async function getFeedController(req, res) {
             currentPage: page,
             totalPages: Math.ceil(totalPosts / limit),
             totalPosts,
-            posts
+            posts: updatedPosts
         });
 
     } catch (error) {

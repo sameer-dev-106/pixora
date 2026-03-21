@@ -1,14 +1,15 @@
 import { createBrowserRouter } from "react-router";
 import Login from "./features/auth/pages/Login";
 import Register from "./features/auth/pages/Register";
-import Home from "./features/auth/pages/Home";
 import GetMe from "./features/auth/pages/GetMe";
 import SetupProfile from "./features/auth/pages/SetupProfile";
+import Feed from "./features/post/pages/Feed";
+import CreatePost from "./features/post/pages/CreatePost";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: <Feed />,
   },
   {
     path: "/login",
@@ -25,6 +26,10 @@ export const router = createBrowserRouter([
   {
     path: "/get-me",
     element: <GetMe />,
+  },
+  {
+    path: "/create-post",
+    element: <CreatePost />
   },
   {
     path: "*",
