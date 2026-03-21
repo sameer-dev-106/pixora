@@ -1,0 +1,46 @@
+@use "../../../styles/assets/variables" as *;
+@use "../../../styles/assets/mixins" as *;
+
+
+.feed-header {
+    width: 100%;
+    max-width: none;
+    padding: $space-xs $space-md;
+
+    background: $bg-main;
+
+    @include flex-center;
+    justify-content: space-between;
+
+    .feed-nav {
+        text-align: center;
+
+        
+        h1 {
+            font-size: $text-xl;
+            color: $primary;
+        }
+        
+    }
+
+    .nav-btn {
+        text-align: end;
+        color: $accent;
+        border: none;
+        background: none;
+        @include flex-center;
+            gap: $space-xl;
+        
+            svg {
+                color: $muted;
+                transition: 0.3s;
+                cursor: pointer;
+        
+                &:hover {
+                    color: $accent;
+                    transform: scale(1.5);
+        
+                }
+            }
+    }
+}
