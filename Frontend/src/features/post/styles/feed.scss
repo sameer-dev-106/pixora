@@ -1,0 +1,19 @@
+@use "../../../styles/assets/variables" as *;
+@use "../../../styles/assets/mixins" as *;
+
+
+.feed-page {
+    @include flex-center;
+}
+
+.feed {
+    max-width: 450px;
+    margin: auto;
+    width: 90%;
+
+    .posts {
+        width: 100%;
+        overflow: hidden;
+        @include flex-column(1rem);
+    }
+}
