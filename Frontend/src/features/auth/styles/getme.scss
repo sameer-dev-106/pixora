@@ -1,16 +1,28 @@
 @use "../../../styles/assets/variables" as *;
 @use "../../../styles/assets/mixins" as *;
 
+
 .profile-page {
-
-
-    min-height: 100vh;
-    padding: 2rem 1rem;
-
     width: 100dvw;
     height: 100dvh;
+    min-height: 100vh;
+    
+    @include flex-center;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+
+.profile-page-section {
+
+
+    padding: 0 1rem;
+
+    width: 100dvw;
+    height: 80dvh;
 
     @include flex-center;
+    flex-direction: column;
     justify-content: flex-start;
 
     gap: 1rem;
@@ -23,7 +35,7 @@
     .profile-posts {
         width: 100%;
         max-width: 700px;
-        background: $bg;
+        @include glass-effect;
         border-radius: $radius-md;
     }
 
