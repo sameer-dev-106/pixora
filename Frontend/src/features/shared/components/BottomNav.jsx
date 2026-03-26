@@ -19,9 +19,9 @@ const BottomNav = () => {
 
       <div className="fab">
         <Plus
-          // onClick={() => {
-          //   navigate("/create-post");
-          // }}
+          onClick={() => {
+            navigate("/create-post");
+          }}
         />
       </div>
 
