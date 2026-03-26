@@ -35,7 +35,7 @@
     }
 
     .username {
-        color: $primary;
+        color: $secondary;
         font-size: 1.5rem;
         letter-spacing: 0.05em;
     }
@@ -47,6 +47,16 @@
 
         margin-top: 1rem;
 
-        background: $btn-bg;
+        background: $card;
+        color: $btn-text;
+
+        transition: all ease 0.05s;
+
+        &:hover,
+        &:active {
+            background: $btn-hover;
+            color: $black;
+        }
+
     }
 }

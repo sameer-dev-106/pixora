@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import ProfileHeader from "../components/ProfileHeader";
 import ProfileStats from "../components/ProfileStats";
 import ProfilePosts from "../components/ProfilePosts";
-import "../styles/getme.scss";
-import { useAuth } from "../hooks/useAuth";
+import "../styles/profile.scss";
+import { useAuth } from "../../auth/hooks/useAuth";
 import Nav from "../../shared/components/Nav";
 import BottomNav from "../../shared/components/BottomNav";
 
-const GetMe = () => {
+const Profile = () => {
   const [data, setData] = useState(null);
 
   const { loading, handleGetMe } = useAuth();
@@ -30,7 +30,7 @@ const GetMe = () => {
 
   return (
     <main className="profile-page">
-        <Nav />
+      <Nav />
       <section className="profile-page-section">
         <ProfileHeader user={data.user} />
         <ProfileStats
@@ -40,9 +40,9 @@ const GetMe = () => {
         />
         <ProfilePosts posts={data.posts} />
       </section>
-        <BottomNav />
+      <BottomNav />
     </main>
   );
 };
 
-export default GetMe;
+export default Profile;
