@@ -1,4 +1,4 @@
-import { Home, Bookmark, Plus, User, Search, Heart } from "lucide-react";
+import { Home, Bookmark, Plus, User, Search, Heart, BellDot } from "lucide-react";
 import "../style/bottomNav.scss";
 import { useNavigate } from "react-router";
 
@@ -14,18 +14,24 @@ const BottomNav = () => {
             navigate("/");
           }}
         />
+        <Search />
       </div>
 
       <div className="fab">
         <Plus
-          onClick={() => {
-            navigate("/create-post");
-          }}
+          // onClick={() => {
+          //   navigate("/create-post");
+          // }}
         />
       </div>
 
       <div className="nav-right">
-        <Search />
+        <BellDot />
+        <User
+          onClick={() => {
+            navigate("/get-me");
+          }}
+        />
       </div>
     </div>
   );
