@@ -15,14 +15,16 @@ const Profile = () => {
   useEffect(() => {
     const fetchUser = async () => {
       const res = await handleGetMe();
+      if (res) return;
       setData(res);
     };
     fetchUser();
-  }, []);
+  }, [handleGetMe]);
 
   if (loading || !data) {
     return (
       <main>
+        {console.log(loading)}
         <h1>Loading...</h1>
       </main>
     );
