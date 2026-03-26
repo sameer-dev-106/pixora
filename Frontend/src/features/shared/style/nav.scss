@@ -10,7 +10,6 @@
     background: $bg-main;
 
     @include flex-center;
-    justify-content: space-between;
 
     .feed-nav {
         text-align: center;
