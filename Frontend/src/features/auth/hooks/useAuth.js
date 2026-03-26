@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useCallback, useContext } from "react";
 import AuthContext from "../auth.context.jsx";
 import { register, updateProfile, login, getMe } from "../services/auth.api.js";
 
@@ -81,7 +81,7 @@ export function useAuth() {
         }
     };
 
-    const handleGetMe = async () => {
+    const handleGetMe = useCallback(async () => {
         setLoading(true);
         try {
             const response = await getMe();
@@ -102,7 +102,7 @@ export function useAuth() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [setUser, setLoading, setError])
 
     return {
         user, loading, error, setError, handleRegister, handleUpdateProfile, handleLogin, handleGetMe
