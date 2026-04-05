@@ -1,5 +1,5 @@
 import { useCallback, useContext } from "react";
-import { getFeed, likePost, unlikePost } from "../services/post.api.js";
+import { getFeed, likePost, unlikePost, createPost } from "../services/post.api.js";
 import PostContext from "../Post.context.jsx";
 
 
@@ -7,7 +7,7 @@ export const usePost = () => {
 
     const context = useContext(PostContext)
 
-    const { loading, setLoading, post, setPost, feed, setFeed, error, setError, page, setPage, totalPages, setTotalPages } = context
+    const { loading, setLoading, post, feed, setFeed, error, setError, setPage, setTotalPages } = context
 
     const handleGetFeed = useCallback(async (newPage = 1) => {
         setLoading(true);
@@ -24,7 +24,7 @@ export const usePost = () => {
             const message =
                 typeof error === "string"
                     ? error
-                    : error?.response?.status?.message 
+                    : error?.response?.status?.message
                 ;
 
             setError(message);
@@ -60,7 +60,29 @@ export const usePost = () => {
         }
     }
 
-    return { handleGetFeed, handleLike, loading, feed, post, error };
+    const handleCreatePost = async ({imageFile, caption}) => {
+        setLoading(true);
+        try {
+            const data = await createPost({imageFile, caption}) 
+            if (data?.post) {
+                setFeed([data.post, ...feed]);
+                return data.post
+            }
+            throw new Error("Post Creating failed");
+        } catch (error) {
+            const message =
+                typeof error === "string"
+                    ? error
+                    : error?.response?.status?.message
+                ;
+
+            setError(message);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    return { handleGetFeed, handleLike, handleCreatePost, loading, feed, post, error };
 
 }
 
