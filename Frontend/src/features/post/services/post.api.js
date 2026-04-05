@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "http://localhost:3000/api/posts",
+    baseURL: "http://localhost:3000/api",
     withCredentials: true
 });
 
@@ -17,7 +17,7 @@ api.interceptors.response.use(
 
 export async function getFeed(page = 1, limit = 5) {
     try {
-        const res = await api.get(`/feed?page=${page}&limit=${limit}`);
+        const res = await api.get(`/posts/feed?page=${page}&limit=${limit}`);
         return res.data;
     } catch (error) {
         throw error.res?.data?.message || "Error fetching feed";
@@ -25,10 +25,25 @@ export async function getFeed(page = 1, limit = 5) {
 }
 
 export const likePost = (postId) => {
-    return api.post(`/like/${postId}`);
+    return api.post(`/posts/like/${postId}`);
 };
 
 export const unlikePost = (postId) => {
-    return api.post(`/unlike/${postId}`);
+    return api.post(`/posts/unlike/${postId}`);
 };
+
+export async function createPost({imageFile, caption}) {
+    try {
+        const formData = new FormData();
+        formData.append("image", imageFile);
+        formData.append("caption", caption);
+
+        const response = await api.post("/posts", formData);
+
+        return response.data
+
+    } catch (error) {
+        throw error.response?.data?.message || "Something went wrong";
+    }
+}
 
