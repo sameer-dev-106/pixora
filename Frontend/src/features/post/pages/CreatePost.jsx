@@ -1,13 +1,96 @@
-import React from 'react'
+import { CirclePlus } from "lucide-react";
+import { useState } from "react";
+import {usePost } from "../hooks/usePost";
+import Nav from "../../shared/components/Nav";
+import BottomNav from "../../shared/components/BottomNav";
+import "../styles/createPost.scss";
+import { useNavigate } from "react-router";
 
 const CreatePost = () => {
-  return (
-    <main>
-        <h1>
-            create post
-        </h1>
-    </main>
-  )
-}
+  const { handleCreatePost, loading } = usePost();
+  
+  const [caption, setCaption] = useState("")
+  const [file, setFile] = useState(null);
+  const [preview, setPreview] = useState(null);
+  const [error, setError] = useState("");
 
-export default CreatePost
+  const navigate = useNavigate();
+
+  const handleFile = (e) => {
+    const selected = e.target.files[0];
+    if (!selected) return;
+
+    setFile(selected);
+    setPreview(URL.createObjectURL(selected));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    if ( !file || !caption) {
+      setError("All fields are required");
+      return;
+    }
+
+    const user = await handleCreatePost({
+      imageFile: file,
+      caption
+    });
+
+    if (!user) {
+      console.log("User not loaded yet");
+      return;
+    }
+
+    navigate("/");
+  };
+
+    if (loading) {
+      return (
+        <main>
+          <h1>Post creating...</h1>
+        </main>
+      );
+    }
+
+  return (
+    <main className="create-post-page">
+      <Nav />
+
+      <section className="create-post-container">
+        <h2>Create Post</h2>
+
+        <form onSubmit={handleSubmit}>
+          <label className="upload-box">
+            {preview ? (
+              <img src={preview} alt="preview" />
+            ) : (
+              <div className="placeholder">
+                <CirclePlus />
+                <p>Upload Image</p>
+              </div>
+            )}
+            <input hidden type="file" onChange={handleFile} />
+          </label>
+
+          <textarea
+            placeholder="Write your caption..."
+            value={caption}
+            onChange={(e) => setCaption(e.target.value)}
+          />
+
+          {error && <p className="error">{error}</p>}
+
+          <button type="submit" disabled={!file || loading}>
+            {loading ? "Posting...." : "Post"}
+          </button>
+        </form>
+      </section>
+
+      <BottomNav />
+    </main>
+  );
+};
+
+export default CreatePost;
