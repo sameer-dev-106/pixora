@@ -29,10 +29,10 @@ export const router = createBrowserRouter([
   },
   {
     path: "/create-post",
-    element: <CreatePost />
+    element: <CreatePost />,
   },
   {
     path: "*",
-    element: <h1>404 Not Found</h1>,
+    element: <Feed />,
   },
 ]);
