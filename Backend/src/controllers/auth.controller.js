@@ -13,7 +13,7 @@ const imageKit = new ImageKit({
 
 
 async function registerController(req, res) {
-    const { username, email, password, bio, profileImage } = req.body;
+    const { username, email, password, fullname, bio, profileImage } = req.body;
 
     const isUserAlreadyExist = await userModel.findOne({
         $or: [
@@ -45,6 +45,7 @@ async function registerController(req, res) {
     const user = await userModel.create({
         username,
         email,
+        fullname,
         bio,
         profileImage,
         password: hash
@@ -60,6 +61,7 @@ async function registerController(req, res) {
         user: {
             email: user.email,
             username: user.username,
+            fullname: user.fullname,
             bio: user.bio,
             profileImage: user.profileImage
         },
@@ -69,7 +71,7 @@ async function registerController(req, res) {
 async function updateProfileController(req, res) {
     const userId = req.user.id;
 
-    const { username, email, bio } = req.body;
+    const { username, email, fullname, bio } = req.body;
 
     const user = await userModel.findById(userId);
 
@@ -81,6 +83,7 @@ async function updateProfileController(req, res) {
 
     if (username) user.username = username;
     if (email) user.email = email;
+    if (fullname) user.fullname = fullname;
     if (bio) user.bio = bio;
 
     if (req.file) {
@@ -137,6 +140,7 @@ async function loginController(req, res) {
         user: {
             username: user.username,
             email: user.email,
+            fullname: user.fullname,
             bio: user.bio,
             profileImage: user.profileImage
         },
@@ -182,6 +186,7 @@ async function getMeController(req, res) {
                 _id: user._id,
                 username: user.username,
                 email: user.email,
+                fullname: user.fullname,
                 bio: user.bio,
                 profileImage: user.profileImage,
             },
