@@ -7,9 +7,11 @@ main {
 
     @include flex-center;
     flex-direction: column;
+    justify-content: flex-start;
     gap: 1rem;
 
-    background: radial-gradient(circle at top, #1a1a2e, #0f172a);
+    background: $bg-form;
+
     font-size: 1rem;
 }
 
@@ -27,6 +29,19 @@ main {
     padding: 1.5rem;
 
     border-radius: $radius-md;
+
+    h2 {
+        color: $primary;
+        font-size: 1.8rem;
+        letter-spacing: 0.05em;
+    }
+
+    p {
+        text-align: center;
+        color: $secondary;
+        letter-spacing: 0.05em;
+        padding-top: 0.5em;
+    }
 }
 
 .form-header {
@@ -40,11 +55,7 @@ main {
         }
     }
 
-    h2 {
-        color: $primary;
-        font-size: 1.8rem;
-        letter-spacing: 0.05em;
-    }
+
 }
 
 .form-container {
@@ -55,10 +66,10 @@ main {
         width: 100%;
         @include flex-center;
         flex-direction: column;
-        align-items: stretch;
         gap: 1rem;
 
-        input,textarea {
+        input,
+        textarea {
             @include input-style;
             box-shadow: $input-box-shadow;
         }
@@ -75,22 +86,28 @@ main {
             @include autofill-fix;
         }
 
-        .upload-btn {
+        .upload {
+            width: 120px;
+            height: 120px;
             border: 2px solid #ff2e63;
-            padding: 1rem;
-            border-radius: $radius-sm;
-            background: transparent;
-            color: $text;
-            text-align: center;
-            cursor: pointer;
+            border-radius: $radius-full;
 
             @include flex-center;
-            gap: 0.5rem;
+            cursor: pointer;
+            overflow: hidden;
 
             svg {
-                width: 40px;
-                stroke-width: 2.5px;
                 color: #ff2e63;
+                width: 30px;
+                height: 30px;
+                stroke-width: 2.5px;
+            }
+
+            .avatar {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center;
             }
 
             &:hover {
@@ -116,6 +133,7 @@ main {
 
         button {
             @include primary-btn;
+            width: 100%;
 
             &:hover,
             &:focus,
@@ -163,7 +181,7 @@ main {
 }
 
 @keyframes shacking {
-    from{
+    from {
         transform: translateX(0);
     }
 
