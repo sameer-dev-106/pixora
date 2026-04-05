@@ -24,7 +24,6 @@ const Profile = () => {
   if (loading || !data) {
     return (
       <main>
-        {console.log(loading)}
         <h1>Loading...</h1>
       </main>
     );
