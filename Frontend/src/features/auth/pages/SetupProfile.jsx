@@ -2,12 +2,14 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { CirclePlus } from "lucide-react";
 import { useAuth } from "../hooks/useAuth";
+import Nav from "../../shared/components/Nav";
 import "../styles/form.scss";
 
 function SetupProfile() {
   const { handleUpdateProfile, loading } = useAuth();
 
   const [bio, setBio] = useState("");
+  const [fullname, setFullName] = useState("");
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [error, setError] = useState("");
@@ -26,12 +28,13 @@ function SetupProfile() {
     e.preventDefault();
     setError("");
 
-    if (!bio || !file) {
+    if (!bio || !file || !fullname) {
       setError("All fields are required");
       return;
     }
 
     const user = await handleUpdateProfile({
+      fullname,
       bio,
       profileImage: file,
     });
@@ -54,25 +57,30 @@ function SetupProfile() {
 
   return (
     <main>
-      <section className="form-header">
-        <div className="logo">
-          <img src="/PixoraLogo.png" alt="logo" />
-        </div>
-        <h2>Setup Your Profile</h2>
-        <p>Tell us more about you</p>
-      </section>
-
+      <Nav />
       <section className="form-container">
-        <h1>Setup Profile</h1>
+        <div>
+          <h2>Setup Your Profile</h2>
+          <p>Tell us more about you</p>
+        </div>
 
         <form onSubmit={handleSubmit}>
-          {preview && <img src={preview} width="100" alt="Preview" />}
+          <label className="upload">
+            {preview ? (
+              <img src={preview} alt="preview" className="avatar" />
+            ) : (
+              <CirclePlus />
+            )}
 
-          <label className="upload-btn">
-            <CirclePlus />
-            Upload Image
-            <input type="file" hidden onChange={handleFile} />
+            <input hidden type="file" onChange={handleFile} />
           </label>
+
+          <input
+            type="text"
+            placeholder="Full name"
+            value={fullname}
+            onChange={(e) => setFullName(e.target.value)}
+          />
 
           <label className="bio">
             Bio <span>(Tell us about yourself)</span>
