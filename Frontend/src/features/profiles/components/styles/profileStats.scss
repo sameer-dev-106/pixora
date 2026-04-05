@@ -12,8 +12,8 @@
         text-align: center;
         padding: 0.5rem 1rem;
         @include glass-effect;
-        @include soft-shadow;
-        border-radius: $radius-sm;
+        box-shadow: $shadow;
+        border-radius: $radius-md;
 
         .number {
             font-size: 1.25rem;
