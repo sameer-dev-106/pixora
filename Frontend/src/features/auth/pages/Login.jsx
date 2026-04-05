@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../styles/form.scss";
 import { Link, useNavigate } from "react-router";
 import { useAuth } from "../hooks/useAuth";
+import Nav from "../../shared/components/Nav";
 
 const Login = () => {
   const { handleLogin, loading } = useAuth();
@@ -44,10 +45,8 @@ const Login = () => {
 
   return (
     <main>
+      <Nav />
       <section className="form-header">
-        <div className="logo">
-          <img src="/PixoraLogo.png" alt="" />
-        </div>
         <h2>Welcome Back!</h2>
         <p>Login to your account to continue</p>
       </section>

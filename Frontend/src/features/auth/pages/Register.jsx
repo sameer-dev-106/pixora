@@ -2,23 +2,23 @@ import React, { useState } from "react";
 import "../styles/form.scss";
 import { Link, useNavigate } from "react-router";
 import { useAuth } from "../hooks/useAuth";
+import Nav from "../../shared/components/Nav";
 
 const Register = () => {
-
-  const {handleRegister, loading} = useAuth();
+  const { handleRegister, loading } = useAuth();
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  if(loading) {
-    return(
+  if (loading) {
+    return (
       <main>
         <h1>Loading.....</h1>
       </main>
-    )
+    );
   }
 
   async function submitHandler(e) {
@@ -37,15 +37,12 @@ const Register = () => {
     }
 
     navigate("/setup-profile");
-
   }
 
   return (
     <main>
+      <Nav />
       <section className="form-header">
-        <div className="logo">
-          <img src="/PixoraLogo.png" alt="" />
-        </div>
         <h2>Create an Account</h2>
         <p>Join us to get started</p>
       </section>
