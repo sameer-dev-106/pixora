@@ -2,7 +2,6 @@ import { useCallback, useContext } from "react";
 import AuthContext from "../auth.context.jsx";
 import { register, updateProfile, login, getMe } from "../services/auth.api.js";
 
-
 export function useAuth() {
 
     const context = useContext(AuthContext);
@@ -32,10 +31,10 @@ export function useAuth() {
         }
     };
 
-    const handleUpdateProfile = async ({ bio, profileImage }) => {
+    const handleUpdateProfile = async ({ fullname, bio, profileImage }) => {
         setLoading(true);
         try {
-            const response = await updateProfile({ bio, profileImage });
+            const response = await updateProfile({ fullname, bio, profileImage });
             if (response?.user) {
                 setUser(response.user);
                 return response.user;
