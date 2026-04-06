@@ -99,6 +99,7 @@ async function deletePostController(req, res) {
         message: "Post deleted successfully."
     });
 }
+
 async function getFeedController(req, res) {
     try {
         const userId = req.user.id;
