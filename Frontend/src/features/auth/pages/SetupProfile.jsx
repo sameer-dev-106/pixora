@@ -56,7 +56,7 @@ function SetupProfile() {
   }
 
   return (
-    <main>
+    <main className="container">
       <Nav />
       <section className="form-container">
         <div>

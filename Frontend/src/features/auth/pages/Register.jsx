@@ -40,7 +40,7 @@ const Register = () => {
   }
 
   return (
-    <main>
+    <main className="container">
       <Nav />
       <section className="form-header">
         <h2>Create an Account</h2>

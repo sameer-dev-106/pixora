@@ -44,7 +44,7 @@ const Login = () => {
   }
 
   return (
-    <main>
+    <main className="container">
       <Nav />
       <section className="form-header">
         <h2>Welcome Back!</h2>
