@@ -3,12 +3,14 @@
 
 
 .feed-page {
+    min-height: 100dvh;
+
     @include flex-center;
     flex-direction: column;
 
     gap: 1rem;
 
-    background: $bg-form;
+    background: $bg-dark;
 }
 
 .feed {
