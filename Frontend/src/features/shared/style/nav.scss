@@ -7,8 +7,6 @@
     max-width: none;
     padding: $space-xs $space-md;
 
-    background: $bg-main;
-
     @include flex-center;
 
     .feed-nav {
