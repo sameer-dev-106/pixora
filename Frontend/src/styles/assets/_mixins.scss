@@ -40,7 +40,7 @@
 @mixin primary-btn ($space: 1rem) {
     border: none;
     padding: $space;
-    border-radius: $radius-sm;
+    border-radius: $radius-md;
     background: $btn-bg;
     color: $btn-text;
     font-weight: 500;
