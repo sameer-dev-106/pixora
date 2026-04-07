@@ -4,12 +4,14 @@
 
 .profile-page {
     width: 100dvw;
-    height: 100dvh;
     min-height: 100vh;
     
     @include flex-center;
     flex-direction: column;
     justify-content: flex-start;
+    gap: 1rem;
+
+    background: $bg-form;
 }
 
 

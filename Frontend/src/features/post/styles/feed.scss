@@ -4,6 +4,11 @@
 
 .feed-page {
     @include flex-center;
+    flex-direction: column;
+
+    gap: 1rem;
+
+    background: $bg-form;
 }
 
 .feed {
