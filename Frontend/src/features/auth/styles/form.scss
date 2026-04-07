@@ -1,7 +1,7 @@
 @use "../../../styles/assets/variables" as *;
 @use "../../../styles/assets/mixins" as *;
 
-main {
+.container {
     min-height: 100dvh;
     width: 100%;
 
@@ -42,20 +42,6 @@ main {
         letter-spacing: 0.05em;
         padding-top: 0.5em;
     }
-}
-
-.form-header {
-    .logo {
-        width: 80px;
-        overflow: hidden;
-
-        img {
-            width: 100%;
-            height: auto;
-        }
-    }
-
-
 }
 
 .form-container {
@@ -132,7 +118,7 @@ main {
         }
 
         button {
-            @include primary-btn;
+            @include primary-btn(0.8rem);
             width: 100%;
 
             &:hover,
