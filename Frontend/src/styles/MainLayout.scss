@@ -4,7 +4,7 @@
 .app-container {
     height: 100vh;
     @include flex-column;
-    background: $bg-form;
+    background: $bg;
 }
 
 .content {

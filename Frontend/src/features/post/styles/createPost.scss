@@ -5,15 +5,16 @@
     @include flex-center;
     flex-direction: column;
     gap: 2rem;
-
+    
     @include glass-effect;
     @include soft-shadow;
-
+    
     animation: fadeIn 0.6s ease;
-
+    
     width: 90%;
     max-width: 420px;
     padding: 1.5rem;
+    margin: auto;    
 
     border-radius: $radius-md;
 
