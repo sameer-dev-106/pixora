@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
+import { useAuth } from "../../auth/hooks/useAuth";
+
 import ProfileHeader from "../components/ProfileHeader";
 import ProfileStats from "../components/ProfileStats";
 import ProfilePosts from "../components/ProfilePosts";
+import LoadingPage from "../../shared/components/LoadingPage";
+
 import "../styles/profile.scss";
-import { useAuth } from "../../auth/hooks/useAuth";
-import Nav from "../../shared/components/Nav";
-import BottomNav from "../../shared/components/BottomNav";
 
 const Profile = () => {
   const [data, setData] = useState(null);
@@ -23,15 +24,12 @@ const Profile = () => {
 
   if (loading || !data) {
     return (
-      <main>
-        <h1>Loading...</h1>
-      </main>
+        <LoadingPage />
     );
   }
 
   return (
     <main className="profile-page">
-      <Nav />
       <section className="profile-page-section">
         <ProfileHeader user={data.user} />
         <ProfileStats
@@ -41,7 +39,6 @@ const Profile = () => {
         />
         <ProfilePosts posts={data.posts} />
       </section>
-      <BottomNav />
     </main>
   );
 };

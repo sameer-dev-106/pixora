@@ -3,17 +3,17 @@
 
 
 .profile-page {
-    width: 100dvw;
-    min-height: 100vh;
+    width: 100%;
     
     @include flex-center;
     flex-direction: column;
     justify-content: flex-start;
     gap: 1rem;
-
-    background: $bg-dark;
 }
 
+::-webkit-scrollbar {
+    display: none;
+}
 
 .profile-page-section {
 
@@ -39,7 +39,6 @@
         @include glass-effect;
         border-radius: $radius-md;
     }
-
     .profile-posts {
         max-width: 900px;
     }
