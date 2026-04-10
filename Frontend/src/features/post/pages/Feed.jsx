@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import "../styles/feed.scss";
 import Post from "../components/Post";
 import { usePost } from "../hooks/usePost";
-import Nav from "../../shared/components/Nav";
-import BottomNav from "../../shared/components/BottomNav";
+import LoadingPage from "../../shared/components/LoadingPage";
 
 const Feed = () => {
   const { feed, handleGetFeed, loading, page, totalPages } = usePost();
@@ -29,18 +28,16 @@ const Feed = () => {
   }, [handleGetFeed, page, totalPages, loading]);
 
   return (
-    <main className="feed-page">
-      <Nav />
+    <section className="feed-page">
       <div className="feed">
         <div className="posts">
           {feed?.map((post, idx) => {
             return <Post key={idx} user={post.user} post={post} />;
           })}
-          {loading && <p align="center">Loading more...</p>}
+          {loading && <LoadingPage />}
         </div>
       </div>
-      <BottomNav />
-    </main>
+    </section>
   );
 };
 
