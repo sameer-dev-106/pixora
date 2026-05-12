@@ -57,10 +57,10 @@ export function useAuth() {
         }
     };
 
-    const handleLogin = async (username, password) => {
+    const handleLogin = async ({username, email, password}) => {
         setLoading(true);
         try {
-            const response = await login(username, password);
+            const response = await login(username, email, password);
             if (response?.user) {
                 setUser(response.user);
             }

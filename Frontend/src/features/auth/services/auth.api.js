@@ -30,7 +30,7 @@ export async function register(username, email, password) {
     }
 }
 
-export async function updateProfile({fullname, bio, profileImage}) {
+export async function updateProfile({ fullname, bio, profileImage }) {
     try {
         const formData = new FormData();
         formData.append("fullname", fullname);
@@ -46,10 +46,10 @@ export async function updateProfile({fullname, bio, profileImage}) {
     }
 }
 
-export async function login(username, password) {
+export async function login(username, email, password) {
     try {
         const response = await api.post("/login", {
-            username, password
+            username, email, password
         });
         return response.data;
     } catch (error) {
