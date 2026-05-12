@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap');
+
+// Colors
+$primary:        #9169ef;
+$primary-light:  #7B4FFF;
+$lavender:       #B19EEF;
+$pink:           #FF9FFC;
+$bg-deep:        #07071a;
+$bg-dark:        #000000;
+$bg-card:        #0f0f2a;
+$border:         rgba(255, 255, 255, 0.08);
+$border-focus:   rgba(3, 3, 3, 0.7);
+$text-white:     #ffffff;
+$text-muted:     rgba(177, 158, 239, 0.6);
+$text-faint:     rgba(177, 158, 239, 0.35);
+
+// Typography
+$font:           'Geist', system-ui, sans-serif;
+$font-serif:     Georgia, 'Times New Roman', serif;
+
+// Transitions
+$transition:     all 0.2s ease;
+$transition-slow: all 0.4s ease;
